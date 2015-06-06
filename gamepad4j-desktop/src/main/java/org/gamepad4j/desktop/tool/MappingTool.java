@@ -4,6 +4,8 @@
 
 package org.gamepad4j.desktop.tool;
 
+import org.gamepad4j.util.Log;
+
 
 /**
  * Starts test program.
@@ -15,6 +17,7 @@ public class MappingTool {
 	
 	public static void main(String[] args) {
 		MappingTool gamepadTest = new MappingTool();
+		Log.initialize(Log.LogLevel.DEBUG);
 		gamepadTest.runTest();
 	}
 

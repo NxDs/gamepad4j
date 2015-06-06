@@ -66,6 +66,9 @@ public class ControllerPanel extends JPanel {
 	    for(IAxis axis : axes) {
 	    	grid.gridx = x;
 	    	grid.gridy = y;
+	    	if(axis == null) {
+	    		throw new RuntimeException("*FAILED*");
+	    	}
 		    subPanel.add(new AxisPanel(axis), grid);
 		    x++;
 		    if(x == numberOfHorizontalBoxes) {

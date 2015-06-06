@@ -62,6 +62,11 @@ public class Mapping {
 
 	/** Lazy label initialization flag. */
 	private static boolean labelsInitialized = false;
+
+	private static String getMappingFileName (String vendorHex, String productHex) {
+		return "/mappings/" + PlatformUtil.getPlatform().name() + "/"
+				+ "0x" + vendorHex + "-0x" + productHex + "-gamepad4j-mapping.properties";
+	}
 	
 	/**
 	 * Loads the mapping for the given controller (if not available yet).
@@ -81,8 +86,7 @@ public class Mapping {
 				// If not, load them now
 				String vendorHex = Integer.toHexString(controller.getVendorID()).toUpperCase();
 				String productHex = Integer.toHexString(controller.getProductID()).toUpperCase();
-				String mappingFileName = "/mappings/" + PlatformUtil.getPlatform().name() + "/"
-						+ "0x" + vendorHex + "-0x" + productHex + "-gamepad4j-mapping.properties";
+				String mappingFileName = getMappingFileName(vendorHex, productHex);
 				if(Log.debugEnabled) {
 					Log.logger.debug("Load mapping from resource: " + mappingFileName);
 				}
