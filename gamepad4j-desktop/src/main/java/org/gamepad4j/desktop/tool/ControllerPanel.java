@@ -52,9 +52,6 @@ public class ControllerPanel extends JPanel {
 	    int numberOfHorizontalBoxes = mainPanelWidth / ColorBoxPanel.SIZE.width;
 	    int numberOfVerticalBoxes = axes.length / numberOfHorizontalBoxes + 1;
 	    
-	    System.out.println(">>> NUMBER OF HORIZONTAL BOXES: " + numberOfHorizontalBoxes);
-	    System.out.println(">>> NUMBER OF VERTICAL BOXES: " + numberOfVerticalBoxes);
-
 	    JPanel subPanel = new JPanel(new GridBagLayout());
 	    subPanel.setBackground(Color.DARK_GRAY);
 	    GridBagConstraints grid = new GridBagConstraints();
@@ -66,9 +63,6 @@ public class ControllerPanel extends JPanel {
 	    for(IAxis axis : axes) {
 	    	grid.gridx = x;
 	    	grid.gridy = y;
-	    	if(axis == null) {
-	    		throw new RuntimeException("*FAILED*");
-	    	}
 		    subPanel.add(new AxisPanel(axis), grid);
 		    x++;
 		    if(x == numberOfHorizontalBoxes) {

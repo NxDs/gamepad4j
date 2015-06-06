@@ -147,6 +147,8 @@ public class DesktopController extends AbstractBaseController {
 	public void createAxes(int numberOfAxes) {
 		if(Log.debugEnabled) {
 			Log.logger.debug("Process " + numberOfAxes + " analog axes...");
+			Log.logger.debug("Number of triggers: " + Mapping.getNumberOfTriggers(this));
+			Log.logger.debug("Number of sticks: " + Mapping.getNumberOfSticks(this));
 		}
 
 		// -----------------------  TODO: Use pooling for these ------
@@ -158,14 +160,24 @@ public class DesktopController extends AbstractBaseController {
 		for(int axisNo = 0; axisNo < axes.length; axisNo++) {
 			String mapping = Mapping.getMapping(this, Mapping.MappingType.TRIGGER_AXIS, axisNo);
 			if(mapping != null) {
+				if(Log.debugEnabled) {
+					Log.logger.debug("Process trigger axis...");
+				}
 				processTriggerAxis(mapping, axisNo, triggerNo++);
 			}
 			mapping = Mapping.getMapping(this, Mapping.MappingType.STICK_AXIS, axisNo);
 			if(mapping != null) {
+				if(Log.debugEnabled) {
+					Log.logger.debug("Process stick axis...");
+				}
 				processStickAxis(mapping, axisNo);
 			}
 			mapping = Mapping.getMapping(this, Mapping.MappingType.DPAD_AXIS, axisNo);
+			Log.logger.debug("D-pad mapping for axis " + axisNo + ": " + mapping);
 			if(mapping != null) {
+				if(Log.debugEnabled) {
+					Log.logger.debug("Process d-pad axis...");
+				}
 				processDpadAxis(mapping, axisNo);
 			}
 		}

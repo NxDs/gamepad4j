@@ -32,7 +32,7 @@ public class Mapping {
 		DPAD_AXIS,
 		STICK_AXIS
 	}
-	
+
 	/** Stores digital button mappings. */
 	private static Map<Long, Map<Integer, String>> buttonMapId = new HashMap<Long, Map<Integer, String>>();
 	
@@ -88,6 +88,7 @@ public class Mapping {
 				String productHex = Integer.toHexString(controller.getProductID()).toUpperCase();
 				String mappingFileName = getMappingFileName(vendorHex, productHex);
 				if(Log.debugEnabled) {
+					Log.logger.debug("Vendor ID: " + controller.getVendorID() + " / Product ID: " + controller.getProductID());
 					Log.logger.debug("Load mapping from resource: " + mappingFileName);
 				}
 
@@ -268,6 +269,7 @@ public class Mapping {
 		Map<Integer, String> map = idMap.get(deviceTypeIdentifier);
 		if(map == null) {
 			map = new HashMap<Integer, String>();
+			Log.logger.debug("===> CREATE MAP FOR ID: " + deviceTypeIdentifier);
 			idMap.put(deviceTypeIdentifier, map);
 		}
 		return map;
@@ -306,7 +308,22 @@ public class Mapping {
 		}
 		return map;
 	}
-	
+
+	/**
+	 * Allows to check if there is a mapping for the given controller.
+	 *
+	 * @param controller The controller for which a mapping is required.
+	 * @return True if a mapping exists, false if not.
+	 */
+	public static boolean hasMapping(DesktopController controller) {
+		long deviceTypeIdentifier = controller.getDeviceTypeIdentifier();
+		Log.logger.debug("===> HAS MAP FOR ID: " + deviceTypeIdentifier);
+		if(buttonMapId.get(deviceTypeIdentifier) == null) {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Creates the device identifier by building a long value based on
 	 * the vendor ID and the product ID in the given properties.

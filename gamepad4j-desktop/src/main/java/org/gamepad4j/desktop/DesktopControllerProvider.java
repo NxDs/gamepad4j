@@ -128,16 +128,31 @@ public class DesktopControllerProvider implements IControllerProvider {
 					}
 					newController.setChecked(true);
 					jniWrapper.updateControllerInfo(newController);
-					DesktopControllerProvider.connected.put(newController.getDeviceID(), newController);
-					if(Log.infoEnabled) {
-						Log.logger.info("***********************************************************************");
-						Log.logger.info("Newly connected controller found: " + newController.getDeviceID()
-							+ " (" + Integer.toHexString(newController.getVendorID()) + "/"
-							+ Integer.toHexString(newController.getProductID()) 
-							+ ") / " + newController.getDescription());
-						Log.logger.info("***********************************************************************");
+					Log.logger.debug("===> device ID now: " + newController.getDeviceTypeIdentifier());
+					if(Mapping.hasMapping(newController)) {
+						DesktopControllerProvider.connected.put(newController.getDeviceID(), newController);
+						if(Log.infoEnabled) {
+							Log.logger.info("***********************************************************************");
+							Log.logger.info("Newly connected controller found: " + newController.getDeviceID()
+									+ " (" + Integer.toHexString(newController.getVendorID()) + "/"
+									+ Integer.toHexString(newController.getProductID())
+									+ ") / " + newController.getDescription());
+							Log.logger.info("***********************************************************************");
+						}
+						listeners.getListeners().get(0).connected(newController);
+					} else {
+						newController.setChecked(false);
+						returnInstanceToPool(newController);
+						if(Log.infoEnabled) {
+							Log.logger.info("***********************************************************************");
+							Log.logger.info("Newly connected controller found: " + newController.getDeviceID()
+									+ " (" + Integer.toHexString(newController.getVendorID()) + "/"
+									+ Integer.toHexString(newController.getProductID())
+									+ ") / " + newController.getDescription());
+							Log.logger.info("Controller disabled by API because no mapping is available.");
+							Log.logger.info("***********************************************************************");
+						}
 					}
-					listeners.getListeners().get(0).connected(newController);
 				}
 			}
 		}
