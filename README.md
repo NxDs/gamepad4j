@@ -3,7 +3,6 @@ Gamepad4J
 
 A simple, elegant and powerful API for using gamepads like the Xbox 360 or DualShock 3 pad in Java-based games. 
 
-*Release 1.0 planned for Nov/Dec 2014*
 
  
 Features
